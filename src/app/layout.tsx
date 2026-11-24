@@ -1,38 +1,18 @@
-import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/mona-sans/wdth.css";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
 import "./globals.css";
 import { profile } from "@/lib/data";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const space = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space",
-  display: "swap",
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
+import { SiteChrome } from "@/components/SiteChrome";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.role}`,
+  title: {
+    default: `${profile.name} — ${profile.role}`,
+    template: `%s — ${profile.name}`,
+  },
   description: profile.summary,
-  keywords: [
-    "Aryan Tomar",
-    "Software Engineer",
-    "Spring Boot",
-    "Java Backend Developer",
-    "React",
-    "Next.js",
-    "Full Stack Developer",
-  ],
   authors: [{ name: profile.name }],
   openGraph: {
     title: `${profile.name} — ${profile.role}`,
@@ -41,15 +21,22 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${space.variable} ${mono.variable} font-sans antialiased`}
-      >
-        {children}
+      <body>
+        <a className="skip" href="#main">
+          Skip to content
+        </a>
+        <SiteChrome />
+        <main id="main">{children}</main>
+        <Footer />
       </body>
     </html>
   );
